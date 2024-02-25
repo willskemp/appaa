@@ -8,7 +8,7 @@ https://github.com/pypa/sampleproject
 from setuptools import setup
 
 setup(
-    name="Appa",
+    name="appa",
     version="1.0.0",
     description="A Python package for analysing randomised experiments.",
     author="Will Kemp",
