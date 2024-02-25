@@ -6,8 +6,8 @@ class Dataset:
     def __init__(self, data: pd.DataFrame, version_col: str):
         self.data = data
 
-    def obs_test(self):
+    def obs_test(self, id: any):
         return None
 
-    def obs_control(self):
+    def obs_control(self, id: any):
         return None
