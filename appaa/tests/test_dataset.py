@@ -8,7 +8,7 @@ from pathlib import Path
 def test_obs_to_array():
     wd = Path.cwd()
     os.chdir(wd.parent)
-    test_df = pd.read_csv('test_data.csv')
+    test_df = pd.read_csv('./data/test_data.csv')
     test_dataset = Dataset(test_df)
     test_obs = test_dataset._to_obs_to_array(0)
     assert len(test_obs) == 1000
