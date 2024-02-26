@@ -7,10 +7,8 @@ class Dataset:
         self.dataset = dataset
 
     def _obs_to_array(self, id: float) -> list[float]:
-        tmp = self.dataset.loc(
-            self.dataset.index == id
-        )
-        return tmp['Y'].to_numpy()
+        tmp = self.dataset.loc[self.dataset.index == id]
+        return tmp.to_numpy()
 
     def _obs(self, Yt_id: int, Yc_id: int):
         self.Yt = self._obs_to_array(Yt_id)
