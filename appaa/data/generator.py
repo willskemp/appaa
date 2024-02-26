@@ -35,7 +35,7 @@ class NormalDistribution(Generator):
     def __init__(self, id_cnt: int, id_n: list[int], mu: float, sd: float):
         sample_df = pd.DataFrame(data=None, columns=['Y'])
         for i in range(0, id_cnt):
-            Y_tmp = np.random.normal(loc=mu, scale=sd, size=id_cnt)
+            Y_tmp = np.random.normal(loc=mu, scale=sd, size=id_n[i])
             id_tmp = np.ones(id_n[i]) * i
             tmp_df = pd.DataFrame(data=Y_tmp, index=id_tmp, columns=['Y'])
             sample_df = pd.concat([sample_df, tmp_df])
