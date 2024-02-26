@@ -20,10 +20,9 @@ class PostAnalysis:
         df = self._data.loc[self._data.index == id]
         return df.to_numpy()
 
-    def results(self):
+    def results(self) -> pd.DataFrame:
         results_list = []
         results_dict = {}
-        results_df = pd.DataFrame()
         for pair in self._comparisons:
             test_id = pair[0]
             control_id = pair[1]

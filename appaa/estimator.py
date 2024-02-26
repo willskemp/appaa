@@ -30,12 +30,12 @@ class DifferenceInMeans(Estimator):
         self._alpha = 0.05
         self._beta = 0.8
 
-    def _point_estimate(Yt, Yc) -> float:
+    def _point_estimate(self, Yt, Yc) -> float:
         mean_Yt = np.mean(Yt)
         mean_Yc = np.mean(Yc)
         return mean_Yt - mean_Yc
 
-    def _variance(Yt, Yc) -> float:
+    def _variance(self, Yt, Yc) -> float:
         nt = len(Yt)
         nc = len(Yc)
         var_Yt = np.var(Yt, ddof=1)
@@ -43,19 +43,19 @@ class DifferenceInMeans(Estimator):
         return var_Yt / nt + var_Yc / nc
 
     def _std_error(self, Yt, Yc) -> float:
-        variance = self.variance(Yt, Yc)
+        variance = self._variance(Yt, Yc)
         return np.sqrt(variance)
 
     def _confidence_interval(self, Yt, Yc) -> tuple[float, float]:
         point_estimate = self._point_estimate(Yt, Yc)
-        std_error = self._std_error(self, Yt, Yc)
+        std_error = self._std_error(Yt, Yc)
         critical_value = stats.t.ppf(1 - self._alpha, 10000)
         lb = point_estimate - (std_error * critical_value)
         ub = point_estimate + (std_error * critical_value)
         return (lb, ub)
 
-    def _p_values(self, Yt, Yc) -> float:
+    def _p_value(self, Yt, Yc) -> float:
         point_estimate = self._point_estimate(Yt, Yc)
-        std_error = self._std_error(self, Yt, Yc)
+        std_error = self._std_error(Yt, Yc)
         t_value = point_estimate / std_error
         return stats.t.sf(np.abs(t_value), 1) * 2
