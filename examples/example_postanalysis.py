@@ -1,3 +1,5 @@
+# pip3 install '/Users/willkemp/Python/GitHub/appaa'
+
 from appaa.postanalysis import PostAnalysis
 from appaa.estimator import DifferenceInMeans
 from appaa.data.test import load_data
