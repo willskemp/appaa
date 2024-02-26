@@ -1,6 +1,6 @@
 from appaa.postanalysis import PostAnalysis
 from appaa.estimator import Estimator
-from appaa.data.read_test_data import load_data
+from appaa.data.test import load_data
 import numpy as np
 
 test_df = load_data()
