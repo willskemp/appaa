@@ -1,6 +1,6 @@
 from appaa.postanalysis import PostAnalysis
 from appaa.estimator import DifferenceInMeans
-from appaa.data.read_test_data import load_data
+from appaa.data.test import load_data
 
 df = load_data()
 
