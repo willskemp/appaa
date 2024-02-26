@@ -5,6 +5,7 @@ import numpy as np
 
 test_df = load_data()
 test_dataset = Dataset(test_df)
+test_dataset.obs(1, 0)
 test_estimator = DifferenceInMeans(test_dataset)
 
 
