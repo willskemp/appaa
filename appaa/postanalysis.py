@@ -13,7 +13,7 @@ class PostAnalysis:
         estimator: Estimator,
     ):
         self._data = data
-        self._comparisons = product(test_ids, control_ids)
+        self._comparisons = list(product(test_ids, control_ids))
 
     def _obs_to_array(self, id: float) -> list[float]:
         df = self._data.loc[self._data.index == id]
