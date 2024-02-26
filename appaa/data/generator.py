@@ -14,14 +14,20 @@ class Generator:
         self._id_cnt = id_cnt
         self._data = sample_df
 
-    def add_effect_constant(self, test_cnt: int, lb: float, ub: float):
-        np.random.uniform(low=lb, high=ub, size=test_cnt)
-
-    def add_effect_normal(self, test_cnt: int, mu: float, sd: float):
-        np.random.normal(loc=mu, scale=sd, size=test_cnt)
+    def add_effect_constant(self, test_cnt: int, effect: float):
+        effect_sizes = np.ones(test_cnt) * effect
+        for i in range(0, len(self._data)):
+            self._data["Y"] = self._data["Y"] * effect_sizes[i]
 
     def add_effect_uniform(self, test_cnt: int, lb: float, ub: float):
-        np.random.uniform(low=lb, high=ub, size=test_cnt)
+        effect_sizes = np.random.uniform(low=lb, high=ub, size=test_cnt)
+        for i in range(0, len(self._data)):
+            self._data["Y"] = self._data["Y"] * effect_sizes[i]
+
+    def add_effect_normal(self, test_cnt: int, mu: float, sd: float):
+        effect_sizes = np.random.normal(loc=mu, scale=sd, size=test_cnt)
+        for i in range(0, len(self._data)):
+            self._data["Y"] = self._data["Y"] * effect_sizes[i]
 
 
 class NormalDistribution(Generator):
