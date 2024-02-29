@@ -28,11 +28,11 @@ class PostAnalysis:
             control_id = pair[1]
             Yt = self._obs_to_array(test_id)
             Yc = self._obs_to_array(control_id)
-            point_estimate = self.estimator._point_estimate(Yt, Yc)
-            variance = self.estimator._variance(Yt, Yc)
-            std_error = self.estimator._std_error(Yt, Yc)
-            confidence_interval = self.estimator._confidence_interval(Yt, Yc)
-            p_value = self.estimator._p_value(Yt, Yc)
+            point_estimate = self.estimator.point_estimate(Yt, Yc)
+            variance = self.estimator.variance(Yt, Yc)
+            std_error = self.estimator.std_error(Yt, Yc)
+            confidence_interval = self.estimator.confidence_interval(Yt, Yc)
+            p_value = self.estimator.p_value(Yt, Yc)
             results_dict = {
                 "test_id": test_id,
                 "control_id": control_id,
