@@ -33,7 +33,7 @@ class Estimator(ABC):
 
 class DifferenceInMeans(Estimator):
 
-    def __init__(self, alpha: float, beta: float):
+    def __init__(self, alpha: float = 0.05, beta: float = 0.8):
         super().__init__(alpha, beta)
 
     def point_estimate(self, Yt: np.ndarray, Yc: np.ndarray) -> float:
