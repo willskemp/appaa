@@ -23,7 +23,9 @@ class Estimator(ABC):
         pass
 
     @abstractmethod
-    def confidence_interval(self, Yt: np.ndarray, Yc: np.ndarray) -> tuple[float, float]:
+    def confidence_interval(
+        self, Yt: np.ndarray, Yc: np.ndarray
+    ) -> tuple[float, float]:
         pass
 
     @abstractmethod
@@ -52,7 +54,9 @@ class DifferenceInMeans(Estimator):
         variance = self.variance(Yt, Yc)
         return np.sqrt(variance)
 
-    def confidence_interval(self, Yt: np.ndarray, Yc: np.ndarray) -> tuple[float, float]:
+    def confidence_interval(
+        self, Yt: np.ndarray, Yc: np.ndarray
+    ) -> tuple[float, float]:
         point_estimate = self.point_estimate(Yt, Yc)
         std_error = self.std_error(Yt, Yc)
         critical_value = stats.t.ppf(1 - self._alpha, 10000)
