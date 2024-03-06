@@ -3,7 +3,7 @@ from itertools import product
 import pandas as pd
 
 
-class PostAnalysis:
+class Analysis:
 
     def __init__(
         self,

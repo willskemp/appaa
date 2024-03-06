@@ -23,12 +23,22 @@ class Estimator(ABC):
         pass
 
     @abstractmethod
-    def confidence_interval(self, Yt: np.ndarray, Yc: np.ndarray) -> tuple[float, float]:
+    def confidence_interval(
+        self, Yt: np.ndarray, Yc: np.ndarray
+    ) -> tuple[float, float]:
         pass
 
     @abstractmethod
     def p_value(self, Yt: np.ndarray, Yc: np.ndarray) -> float:
-        return 0.0
+        pass
+
+    @abstractmethod
+    def mde(self, Yt: np.ndarray, Yc: np.ndarray):
+        pass
+
+    @abstractmethod
+    def power(self, Yt: np.ndarray, Yc: np.ndarray, estimated_effect: float):
+        pass
 
 
 class DifferenceInMeans(Estimator):
@@ -52,14 +62,30 @@ class DifferenceInMeans(Estimator):
         variance = self.variance(Yt, Yc)
         return np.sqrt(variance)
 
-    def confidence_interval(self, Yt: np.ndarray, Yc: np.ndarray) -> tuple[float, float]:
+    def confidence_interval(
+        self, Yt: np.ndarray, Yc: np.ndarray
+    ) -> tuple[float, float]:
         point_estimate = self.point_estimate(Yt, Yc)
         std_error = self.std_error(Yt, Yc)
-        critical_value = stats.t.ppf(1 - self._alpha, 10000)
-        lb = point_estimate - (std_error * critical_value)
-        ub = point_estimate + (std_error * critical_value)
+        critical_t = stats.t.ppf(1 - self._alpha, 10000)
+        lb = point_estimate - (std_error * critical_t)
+        ub = point_estimate + (std_error * critical_t)
         return (lb, ub)
 
+    def t_value(self, Yt: np.ndarray, Yc: np.ndarray) -> float:
+        return self.point_estimate(Yt, Yc) / self.std_error(Yt, Yc)
+
     def p_value(self, Yt: np.ndarray, Yc: np.ndarray) -> float:
-        t_value = self.point_estimate(Yt, Yc) / self.std_error(Yt, Yc)
-        return stats.t.sf(np.abs(t_value), 1) * 2
+        return stats.t.sf(np.abs(self.t_value(Yt, Yc)), 1) * 2
+
+    def mde(self, Yt: np.ndarray, Yc: np.ndarray):
+        critical_t = stats.t.ppf(1 - self.alpha, 10000)
+        power_t = stats.t.ppf(self.beta, 10000)
+        mde_t = critical_t + power_t
+        return mde_t * self.std_error(Yt, Yc)
+
+    def power(self, Yt: np.ndarray, Yc: np.ndarray, estimated_effect: float):
+        critical_t = stats.t.ppf(1 - self.alpha, 10000)
+        power_t = estimated_effect / self.std_error(Yt, Yc)
+        mde_t = power_t - critical_t
+        return stats.t.cdf(mde_t, 10000)
