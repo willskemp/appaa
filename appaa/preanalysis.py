@@ -15,3 +15,8 @@ class PreAnalysis:
     def _obs_to_array(self, id: float) -> list[float]:
         df = self._data.loc[self._data.index == id]
         return df.to_numpy()
+
+    def random_sample(self, N: int):
+
+
+    def simulation(self, iterations: int)

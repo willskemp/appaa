@@ -86,6 +86,6 @@ class DifferenceInMeans(Estimator):
 
     def power(self, Yt: np.ndarray, Yc: np.ndarray, estimated_effect: float):
         critical_t = stats.t.ppf(1 - self.alpha, 10000)
-        power_t = self.t_value(Yt, Yc)
+        power_t = estimated_effect / self.std_error(Yt, Yc)
         mde_t = (power_t - critical_t)
         return stats.t.cdf(mde_t, 10000)
