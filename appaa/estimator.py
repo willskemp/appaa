@@ -6,9 +6,9 @@ from typing import Any
 
 class Estimator(ABC):
 
-    def __init__(self, alpha: float, beta: float, **kwargs: Any):
-        self.alpha = alpha
-        self.beta = beta
+    @abstractmethod
+    def __init__(self, **kwargs: Any):
+        pass
 
     @abstractmethod
     def point_estimate(self, Yt: np.ndarray, Yc: np.ndarray) -> float:
@@ -48,7 +48,8 @@ class Estimator(ABC):
 class DifferenceInMeans(Estimator):
 
     def __init__(self, alpha: float = 0.05, beta: float = 0.8):
-        super().__init__(alpha, beta)
+        self.alpha = alpha
+        self.beta = beta
 
     def point_estimate(self, Yt: np.ndarray, Yc: np.ndarray) -> float:
         mean_Yt = np.mean(Yt)
