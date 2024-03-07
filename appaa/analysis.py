@@ -20,8 +20,8 @@ class Analysis(ABC):
         self.metric_col = metric_col
         self.variant_col = variant_col
 
-    def _obs_to_array(self, id: float) -> list[float]:
-        df = self.data.loc[self.data.index == id]
+    def _obs_to_array(self, metric_col: str, id: float) -> list[float]:
+        df = self.data.loc[self.data.index == id][metric_col]
         return df.to_numpy()
 
     def comparisons(self, test_ids: list[int], control_ids: list[int]):
@@ -49,8 +49,8 @@ class ExperimentResults(Analysis):
         for pair in self.comparisons:
             test_id = pair[0]
             control_id = pair[1]
-            Yt = self._obs_to_array(test_id)
-            Yc = self._obs_to_array(control_id)
+            Yt = self._obs_to_array(self.metric_col, test_id)
+            Yc = self._obs_to_array(self.metric_col, control_id)
 
             assignment_dict = {}
             estimates_dict = {}
