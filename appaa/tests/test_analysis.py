@@ -9,7 +9,6 @@ test_estimator = DifferenceInMeans()
 test_analysis = ExperimentResults(
     data=test_df,
     estimator=test_estimator,
-    randomisation_unit_col="variant",
     metric_col="Y",
     variant_col="variant",
 )
