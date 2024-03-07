@@ -56,7 +56,7 @@ class EmpiricalDistribution(SampleGenerator):
         for i in range(0, id_cnt):
             sampled_df = self.data.sample(n=self.test_n, replace=True)
             if i < self.test_cnt:
-                tmp_effect = np.ones(self.test_n) * effect_sizes[i]
+                tmp_effect = np.ones(self.test_n) * effect_sizes[i].item()
                 sampled_df["effect_size"] = tmp_effect
                 sampled_id = np.ones(self.test_n) * i
             else:
@@ -96,7 +96,7 @@ class NormalDistribution(SampleGenerator):
         id_cnt = self.test_cnt + self.control_cnt
         for i in range(0, id_cnt):
             if i < self.test_cnt:
-                mean = self.mean + effect_sizes[i]
+                mean = self.mean + effect_sizes[i].item()
                 std = self.std
                 n = self.test_n
                 tmp_Y = np.random.normal(loc=mean, scale=std, size=n)
@@ -109,7 +109,7 @@ class NormalDistribution(SampleGenerator):
                 std = self.std
                 n = self.test_n
                 tmp_Y = np.random.normal(loc=mean, scale=std, size=n)
-                tmp_effect = np.ones(self.test_n) * effect_sizes[i]
+                tmp_effect = np.zeros(self.test_n)
                 sampled_id = np.ones(self.test_n) * i
                 sampled_dict = {'effect_size': tmp_effect, 'Y': tmp_Y}
                 sampled_df = pd.DataFrame(data=sampled_dict, index=sampled_id)
