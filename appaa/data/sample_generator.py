@@ -102,7 +102,11 @@ class NormalDistribution(SampleGenerator):
                 tmp_Y = np.random.normal(loc=mean, scale=std, size=n)
                 tmp_effect = np.ones(self.test_n) * effect_sizes[i]
                 sampled_id = np.ones(self.test_n) * i
-                sampled_dict = {'effect_size': tmp_effect, 'Y': tmp_Y}
+                sampled_dict = {
+                    "variant": sampled_id,
+                    "Y": tmp_Y,
+                    "effect_size": tmp_effect,
+                }
                 sampled_df = pd.DataFrame(data=sampled_dict, index=sampled_id)
             else:
                 mean = self.mean
@@ -111,7 +115,11 @@ class NormalDistribution(SampleGenerator):
                 tmp_Y = np.random.normal(loc=mean, scale=std, size=n)
                 tmp_effect = np.zeros(self.test_n)
                 sampled_id = np.ones(self.test_n) * i
-                sampled_dict = {'effect_size': tmp_effect, 'Y': tmp_Y}
+                sampled_dict = {
+                    "variant": sampled_id,
+                    "Y": tmp_Y,
+                    "effect_size": tmp_effect,
+                }
                 sampled_df = pd.DataFrame(data=sampled_dict, index=sampled_id)
             tmp_df = pd.DataFrame(data=sampled_df, index=sampled_id)
             simulated_df = pd.concat([simulated_df, tmp_df])
