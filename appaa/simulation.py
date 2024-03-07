@@ -13,9 +13,6 @@ class Simulation(ABC):
         iterations: int,
         sample_generator: SampleGenerator,
     ):
-        pass
-
-    def simulate(self):
         self.simulated_data = pd.DataFrame(data=None)
         for i in range(0, self.iterations):
             tmp_df = self.sample_generator.generate()
@@ -29,8 +26,10 @@ class Simulation(ABC):
             experiment = ExperimentResults(
                 data=tmp_df, estimator=estimator, metric_col="", variant_col=""
             )
+            test_cnt = self.sample_generator.test_cnt
+            control_cnt = self.sample_generator.control_cnt
+            test_ids = [i for i in range(0, test_cnt)]
+            control_ids = [i for i in range(test_cnt, test_cnt + control_cnt)]
+            experiment.comparisons(test_ids=test_ids, control_ids=control_ids)
             self.simulated_analysis = pd.concat([experiment.analyse(), tmp_df])
         return self.simulated_analysis
-
-    def check_stat_sig():
-        pass
