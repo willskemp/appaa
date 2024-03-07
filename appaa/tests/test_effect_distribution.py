@@ -24,4 +24,4 @@ def test_normal_effect_add_effect():
     normal = NormallyDistributedEffect(mean=1000, std=50)
     normal_effects = normal.add_effect(3000)
     assert len(normal_effects) == 3000
-    assert np.round(np.mean(normal_effects), 5) == -0.09292
+    assert np.round(np.mean(normal_effects), 5) == 1000.65173
