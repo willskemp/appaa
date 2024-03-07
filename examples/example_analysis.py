@@ -11,7 +11,6 @@ estimator = DifferenceInMeans(alpha=0.05, beta=0.8)
 analyse = ExperimentResults(
     data=df,
     estimator=estimator,
-    randomisation_unit_col='variant',
     metric_col='Y',
     variant_col='variant',
 )

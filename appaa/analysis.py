@@ -11,14 +11,14 @@ class Analysis(ABC):
         self,
         data: pd.DataFrame,
         estimator: Estimator,
-        randomisation_unit_col: str,
         metric_col: str,
+        variant_col: str,
         **kwargs: Any,
     ):
         self.data = data
         self.estimator = estimator
-        self.randomisation_unit_col = randomisation_unit_col
         self.metric_col = metric_col
+        self.variant_col = variant_col
 
     def _obs_to_array(self, id: float) -> list[float]:
         df = self.data.loc[self.data.index == id]
@@ -38,13 +38,10 @@ class ExperimentResults(Analysis):
         self,
         data: pd.DataFrame,
         estimator: Estimator,
-        randomisation_unit_col: str,
         metric_col: str,
         variant_col: str,
-        **kwargs: Any,
     ):
-        super().__init__(data, estimator, randomisation_unit_col, metric_col)
-        self.variant_col = variant_col
+        super().__init__(data, estimator, metric_col, variant_col)
         self.data.set_index(variant_col)
 
     def estimate_results(self) -> pd.DataFrame:
