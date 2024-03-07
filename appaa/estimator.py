@@ -40,6 +40,10 @@ class Estimator(ABC):
     def power(self, Yt: np.ndarray, Yc: np.ndarray, estimated_effect: float):
         pass
 
+    @abstractmethod
+    def estimate_results(self, Yt: np.ndarray, Yc: np.ndarray):
+        pass
+
 
 class DifferenceInMeans(Estimator):
 
@@ -67,7 +71,7 @@ class DifferenceInMeans(Estimator):
     ) -> tuple[float, float]:
         point_estimate = self.point_estimate(Yt, Yc)
         std_error = self.std_error(Yt, Yc)
-        critical_t = stats.t.ppf(1 - self._alpha, 10000)
+        critical_t = stats.t.ppf(1 - self.alpha, 10000)
         lb = point_estimate - (std_error * critical_t)
         ub = point_estimate + (std_error * critical_t)
         return (lb, ub)
@@ -89,3 +93,17 @@ class DifferenceInMeans(Estimator):
         power_t = estimated_effect / self.std_error(Yt, Yc)
         mde_t = power_t - critical_t
         return stats.t.cdf(mde_t, 10000)
+
+    def estimate_results(self, Yt, Yc):
+        point_estimate = self.point_estimate(Yt, Yc)
+        variance = self.variance(Yt, Yc)
+        std_error = self.std_error(Yt, Yc)
+        confidence_interval = self.confidence_interval(Yt, Yc)
+        p_value = self.p_value(Yt, Yc)
+        return {
+            "point_estimate": point_estimate,
+            "variance": variance,
+            "std_error": std_error,
+            "confidence_interval": confidence_interval,
+            "p_value": p_value,
+        }
