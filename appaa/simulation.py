@@ -1,23 +1,23 @@
-from abc import ABC, abstractmethod
 from appaa.analysis import ExperimentResults
 from appaa.estimator import Estimator
 from appaa.data.sample_generator import SampleGenerator
 import pandas as pd
 
 
-class Simulation(ABC):
+class Simulation:
 
-    @abstractmethod
     def __init__(
         self,
         iterations: int,
         sample_generator: SampleGenerator,
     ):
+        self.iterations = iterations
+        self.sample_generator = sample_generator
         self.simulated_data = pd.DataFrame(data=None)
-        for i in range(0, self.iterations):
+        for i in range(0, iterations):
             tmp_df = self.sample_generator.generate()
             tmp_df["iteration"] = i
-            self.simulated_df = pd.concat([self.simulated_data, tmp_df])
+            self.simulated_data = pd.concat([self.simulated_data, tmp_df])
 
     def analyse(self, estimator: Estimator):
         self.simulated_analysis = pd.DataFrame(data=None)

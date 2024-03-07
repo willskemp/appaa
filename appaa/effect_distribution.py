@@ -5,17 +5,17 @@ from typing import Any
 
 class EffectDistribution(ABC):
     @abstractmethod
-    def __init__(self, test_cnt: int, **kwargs: Any):
+    def __init__(self, **kwargs: Any):
         pass
 
     @abstractmethod
-    def add_effect(self):
+    def add_effect(self, test_cnt: int):
         pass
 
 
 class ConstantEffect(EffectDistribution):
 
-    def __init__(self, id_cnt: int, effect_size: float):
+    def __init__(self, effect_size: float):
         self.effect_size = effect_size
 
     def add_effect(self, test_cnt: int) -> np.ndarray:
