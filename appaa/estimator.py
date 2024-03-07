@@ -100,6 +100,7 @@ class DifferenceInMeans(Estimator):
         variance = self.variance(Yt, Yc)
         std_error = self.std_error(Yt, Yc)
         confidence_interval = self.confidence_interval(Yt, Yc)
+        t_value = self.t_value(Yt, Yc)
         p_value = self.p_value(Yt, Yc)
         is_significant = p_value <= self.alpha
         if point_estimate >= 0:
@@ -111,6 +112,7 @@ class DifferenceInMeans(Estimator):
             "variance": variance,
             "std_error": std_error,
             "confidence_interval": confidence_interval,
+            "t_value": t_value,
             "p_value": p_value,
             "is_significant": is_significant,
             "direction": direction,
