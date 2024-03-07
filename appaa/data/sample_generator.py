@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 
-class Generator(ABC):
+class SampleGenerator(ABC):
 
     def __init__(
         self,
@@ -27,7 +27,7 @@ class Generator(ABC):
         pass
 
 
-class EmpiricalDistribution(Generator):
+class EmpiricalDistribution(SampleGenerator):
 
     def __init__(
         self,
@@ -68,7 +68,7 @@ class EmpiricalDistribution(Generator):
         return simulated_df
 
 
-class NormalDistribution(Generator):
+class NormalDistribution(SampleGenerator):
 
     def __init__(
         self,
