@@ -16,6 +16,6 @@ test_analysis.comparisons(test_ids=[1], control_ids=[0])
 
 
 def test_obs_to_array(analysis: ExperimentResults = test_analysis):
-    test_obs = analysis._obs_to_array(0)
+    test_obs = analysis._obs_to_array(analysis.metric_col, 0)
     assert len(test_obs) == 1000
     assert type(test_obs) is np.ndarray
