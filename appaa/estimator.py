@@ -48,6 +48,7 @@ class Estimator(ABC):
         self, Yt: np.ndarray, Yc: np.ndarray, iterations: int, alpha: float
     ):
         confidence_interval_list = []
+        np.random.seed(32)
         for i in range(0, iterations):
             nt = len(Yt)
             nc = len(Yc)
