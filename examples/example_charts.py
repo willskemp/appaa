@@ -4,6 +4,7 @@ from appaa.estimator import DifferenceInMeans
 from appaa.simulation import Simulation
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy import stats
 
 # Simulation Parameters
 iterations = 2500  # No. of experiment scenarios to be simulated
@@ -42,7 +43,29 @@ simulation = Simulation(
 
 experiment_df = simulation.analyse(estimator=estimator)
 
-fig, ax = plt.subplots()
-ax.hist(experiment_df['t_value'], bins=200, density=True)
-ax.hist(np.random.normal(0, 1, 2500), bins=200, density=True)
+kde1 = stats.gaussian_kde(experiment_df["t_value"].to_numpy())
+kde2 = stats.gaussian_kde(np.random.normal(0, 1, 2500))
+xx = np.linspace(-4, 4, 1000)
+
+fig, ax = plt.subplots(figsize=(16, 8))
+ax.set_title("Simulated t-distribution vs. N(0, 1)")
+ax.hist(
+    x=experiment_df["t_value"].to_numpy(),
+    density=True,
+    bins=50,
+    color="skyblue",
+    label="Empirical",
+)
+ax.hist(
+    x=np.random.normal(0, 1, 2500),
+    density=True,
+    bins=50,
+    color="orange",
+    label="N(0, 1)",
+)
+ax.plot(xx, kde1(xx), color='skyblue')
+ax.plot(xx, kde2(xx), color='orange')
+plt.xlim(-4, 4)
+plt.ylim(0, 0.55)
+plt.legend()
 plt.show()
