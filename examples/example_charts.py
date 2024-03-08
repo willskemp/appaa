@@ -43,6 +43,6 @@ simulation = Simulation(
 experiment_df = simulation.analyse(estimator=estimator)
 
 fig, ax = plt.subplots()
-ax.hist(experiment_df['t_value'], bins=100, density=True)
-ax.hist(np.random.normal(0, 1, 500), bins=100, density=True)
+ax.hist(experiment_df['t_value'], bins=200, density=True)
+ax.hist(np.random.normal(0, 1, 2500), bins=200, density=True)
 plt.show()
