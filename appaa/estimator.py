@@ -44,6 +44,23 @@ class Estimator(ABC):
     def estimate_results(self, Yt: np.ndarray, Yc: np.ndarray):
         pass
 
+    def bootstrap_confidence_interval(
+        self, Yt: np.ndarray, Yc: np.ndarray, iterations: int, alpha: float
+    ):
+        confidence_interval_list = []
+        for i in range(0, iterations):
+            nt = len(Yt)
+            nc = len(Yc)
+            tmp_Yt = np.random.choice(a=Yt, size=nt, replace=True)
+            tmp_Yc = np.random.choice(a=Yc, size=nc, replace=True)
+            tmp_point_estimate = self.point_estimate(tmp_Yt, tmp_Yc)
+            confidence_interval_list.append(tmp_point_estimate)
+            low_alpha = alpha * 100 / 2
+            high_alpha = 100 - low_alpha
+        lb = np.percentile(confidence_interval_list, low_alpha)
+        ub = np.percentile(confidence_interval_list, high_alpha)
+        return (lb, ub)
+
 
 class DifferenceInMeans(Estimator):
 
