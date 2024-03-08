@@ -4,7 +4,6 @@ from appaa.estimator import DifferenceInMeans
 from appaa.simulation import Simulation
 import matplotlib.pyplot as plt
 import numpy as np
-import seaborn as sns
 
 # Simulation Parameters
 iterations = 2500  # No. of experiment scenarios to be simulated
@@ -43,19 +42,7 @@ simulation = Simulation(
 
 experiment_df = simulation.analyse(estimator=estimator)
 
-sns.displot(experiment_df, x='t_value', stat='probability')
-sns.displot(np.random.normal(0, 1, 1000), stat='probability', kind='kde')
+fig, ax = plt.subplots()
+ax.hist(experiment_df['t_value'], bins=200, density=True)
+ax.hist(np.random.normal(0, 1, 2500), bins=200, density=True)
 plt.show()
-
-sns.distplot(experiment_df['t_value'], hist=False)
-sns.distplot(np.random.normal(0, 1, 500), hist=False)
-plt.show()
-# ax = sns.histplot(experiment_df, kde=False, stat='probability')
-
-# calculate the pdf
-# x0, x1 = ax.get_xlim()  # extract the endpoints for the x-axis
-# x_pdf = np.linspace(x0, x1, 100)
-# y_pdf = scipy.stats.norm.pdf(x_pdf)
-
-# ax.plot(x_pdf, y_pdf, 'r', lw=2, label='pdf')
-# ax.legend()
